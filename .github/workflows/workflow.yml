@@ -1,5 +1,10 @@
 name: CI for flutter app
-on: push
+on: 
+ push:
+    branches:
+    - develop
+    - master
+
 jobs:
   build:
     runs-on: ubuntu-latest
