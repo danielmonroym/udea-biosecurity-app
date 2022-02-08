@@ -20,6 +20,7 @@ void main() {
 
     // Verify that our counter starts at 0.
     expect(find.textContaining('Login'), findsOneWidget);
+    expect(find.textContaining('Crear una nueva cuenta'), findsOneWidget);
     expect(find.text('1'), findsNothing);
 
     // // Tap the '+' icon and trigger a frame.
