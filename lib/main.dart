@@ -7,7 +7,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        title: 'Productos App',
+        title: 'Udea Biosecurity App',
         initialRoute: 'login',
         routes: {'login': (_) => LoginScreen(), 'home': (_) => HomeScreen()},
         theme: ThemeData.light()

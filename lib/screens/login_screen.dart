@@ -20,7 +20,7 @@ class LoginScreen extends StatelessWidget {
                   SizedBox(height: 30),
                   Text(
                     'Login',
-                    style: Theme.of(context).textTheme.headline4,
+                    style: Theme.of(context).textTheme.headline5,
                   ),
                   SizedBox(height: 30),
                   ChangeNotifierProvider(
@@ -28,7 +28,7 @@ class LoginScreen extends StatelessWidget {
                 ],
               ),
             ),
-            SizedBox(height: 50),
+            SizedBox(height: 20),
             Text('Crear una nueva cuenta',
                 style: TextStyle(color: Color(0xff2E6347))),
             SizedBox(height: 50),

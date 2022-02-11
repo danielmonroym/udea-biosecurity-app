@@ -7,8 +7,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-
-import 'package:udea_biosecurity_app/main.dart';
 import 'package:udea_biosecurity_app/screens/screens.dart';
 
 void main() {
@@ -21,14 +19,9 @@ void main() {
     // Verify that our counter starts at 0.
     expect(find.textContaining('Login'), findsOneWidget);
     expect(find.textContaining('Crear una nueva cuenta'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
 
-    // // Tap the '+' icon and trigger a frame.
-    // await tester.tap(find.byIcon(Icons.add));
-    // await tester.pump();
+    await tester.enterText(find.byKey(Key("email-form")), "correo@gmail.com");
 
-    // // Verify that our counter has incremented.
-    // expect(find.text('0'), findsNothing);
-    // expect(find.text('1'), findsOneWidget);
+    expect(find.text('correo@gmail.com'), findsOneWidget);
   });
 }
