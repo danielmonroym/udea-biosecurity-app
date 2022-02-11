@@ -26,16 +26,20 @@ class _HeaderIcon extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Container(
-          width: double.infinity,
-          margin: EdgeInsets.only(top: 30),
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(20),
-            child: FadeInImage(
-              placeholder: AssetImage('lib/assets/no-image.jpg'),
-              image: AssetImage('lib/assets/udea.png'),
-              width: 500,
-              height: 300,
-            ),
+          margin: EdgeInsets.only(top: 25),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              ClipRRect(
+                borderRadius: BorderRadius.circular(30),
+                child: FadeInImage(
+                  placeholder: AssetImage('lib/assets/no-image.jpg'),
+                  image: AssetImage('lib/assets/udea.png'),
+                  height: 225,
+                  fit: BoxFit.fill,
+                ),
+              ),
+            ],
           )),
     );
   }

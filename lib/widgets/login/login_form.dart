@@ -14,6 +14,7 @@ class LoginForm extends StatelessWidget {
           child: Column(
             children: [
               TextFormField(
+                key: Key("email-form"),
                 keyboardType: TextInputType.emailAddress,
                 decoration: InputDecorations.authInputDecoration(
                     hintText: 'john.doe@gmail.com',
@@ -33,6 +34,7 @@ class LoginForm extends StatelessWidget {
               ),
               SizedBox(height: 30),
               TextFormField(
+                key: Key("password-form"),
                 autocorrect: false,
                 obscureText: true,
                 keyboardType: TextInputType.emailAddress,
@@ -48,6 +50,7 @@ class LoginForm extends StatelessWidget {
               ),
               SizedBox(height: 30),
               MaterialButton(
+                  key: Key("login-button"),
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10)),
                   disabledColor: Colors.grey,
