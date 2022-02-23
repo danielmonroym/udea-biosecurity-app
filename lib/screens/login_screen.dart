@@ -23,8 +23,7 @@ class LoginScreen extends StatelessWidget {
                     style: Theme.of(context).textTheme.headline5,
                   ),
                   SizedBox(height: 30),
-                  ChangeNotifierProvider(
-                      create: (_) => LoginFormProvider(), child: LoginForm())
+                  LoginForm()
                 ],
               ),
             ),
