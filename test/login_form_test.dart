@@ -10,7 +10,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:udea_biosecurity_app/screens/screens.dart';
 
 void main() {
-  testWidgets('login screen test', (WidgetTester tester) async {
+  testWidgets('login form test', (WidgetTester tester) async {
     // Build our app and trigger a frame.
     await tester.pumpWidget(const MaterialApp(
       home: LoginScreen(),

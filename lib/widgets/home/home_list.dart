@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:udea_biosecurity_app/widgets/home/home_widgets.dart';
 
 class HomeList extends StatelessWidget {
   final Future getFirstPage;
@@ -18,13 +19,15 @@ class HomeList extends StatelessWidget {
     return RefreshIndicator(
       onRefresh: () => getFirstPage,
       child: ListView.builder(
+        padding: EdgeInsets.all(10),
         controller: this.scrollController,
         itemCount: this.listLength,
         itemBuilder: (BuildContext context, int index) {
           final imagen = listOfNumbers[index];
-          return FadeInImage(
-              image: NetworkImage('https://picsum.photos/id/$imagen/800/600'),
-              placeholder: AssetImage('lib/assets/loading_gif.gif'));
+          print(listOfNumbers);
+          return Center(
+            child: HomeCard(imagen: imagen),
+          );
         },
       ),
     );

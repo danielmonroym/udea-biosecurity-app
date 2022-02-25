@@ -3,8 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:udea_biosecurity_app/providers/home_provider.dart';
-import 'package:udea_biosecurity_app/screens/home/home_list.dart';
-import 'package:udea_biosecurity_app/screens/home/home_loading.dart';
+import 'package:udea_biosecurity_app/widgets/home/home_widgets.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -25,6 +24,7 @@ class _HomeScreenState extends State<HomeScreen> {
     _scrollController.addListener(() {
       if (_scrollController.position.pixels ==
           _scrollController.position.maxScrollExtent) {
+        print('aki');
         fetchListData(homeProvider);
       }
     });
@@ -38,6 +38,7 @@ class _HomeScreenState extends State<HomeScreen> {
         appBar: AppBar(
           backgroundColor: Color(0xff2E6347),
         ),
+        drawer: HomeDrawer(),
         body: Stack(
           children: [
             HomeList(
