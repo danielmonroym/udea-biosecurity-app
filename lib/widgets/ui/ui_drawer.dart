@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class HomeDrawer extends StatelessWidget {
-  const HomeDrawer({
+class UiDrawer extends StatelessWidget {
+  const UiDrawer({
     Key? key,
   }) : super(key: key);
 

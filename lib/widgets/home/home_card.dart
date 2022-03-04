@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:udea_biosecurity_app/models/Places.dart';
 
 class HomeCard extends StatelessWidget {
+  final Places place;
+  final int imagen;
   const HomeCard({
     Key? key,
     required this.imagen,
+    required this.place,
   }) : super(key: key);
-
-  final int imagen;
 
   @override
   Widget build(BuildContext context) {
@@ -25,13 +27,33 @@ class HomeCard extends StatelessWidget {
           ),
           SizedBox(height: 30),
           ListTile(
-              leading: Icon(Icons.photo_album, color: Colors.blue),
-              title: Text('titulo'),
-              subtitle: Text(
-                  'soy del verde soy feliz, sdvsf, solo verde pa soy del verde soy feliz, sdvsf, solo verde pa')),
+              leading: Icon(
+                Icons.add_business_sharp,
+                color: Color(0xff2E6347),
+                size: 40,
+              ),
+              title: Padding(
+                padding: const EdgeInsets.only(bottom: 10),
+                child: Center(child: Text(place.namePlace)),
+              ),
+              subtitle: Container(
+                child: Column(
+                  children: [
+                    Text("Ubicación: ${place.address}"),
+                    Text("Telefono: ${place.phone}"),
+                    Text(
+                        "Horario disponible: ${place.checkIn} - ${place.checkOut}")
+                  ],
+                  mainAxisAlignment: MainAxisAlignment.center,
+                ),
+              )),
           Row(mainAxisAlignment: MainAxisAlignment.end, children: [
             TextButton(onPressed: null, child: Text('Cancelar')),
-            TextButton(onPressed: null, child: Text('OK')),
+            TextButton(
+                onPressed: () {
+                  Navigator.pushNamed(context, 'place-details');
+                },
+                child: Text('OK')),
           ])
         ],
       ),

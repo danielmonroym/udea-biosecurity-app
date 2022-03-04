@@ -2,8 +2,9 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:udea_biosecurity_app/providers/home_provider.dart';
+import 'package:udea_biosecurity_app/providers/sites_provider.dart';
 import 'package:udea_biosecurity_app/widgets/home/home_widgets.dart';
+import 'package:udea_biosecurity_app/widgets/ui/ui_drawer.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -14,52 +15,78 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   ScrollController _scrollController = ScrollController();
-
+  List<int> _numbersList = [];
+  int _lastItem = 0;
+  bool _isLoading = false;
   @override
   void initState() {
     super.initState();
 
-    final homeProvider = Provider.of<HomeProvider>(context, listen: false);
-    homeProvider.addItems();
+    _addItems();
     _scrollController.addListener(() {
       if (_scrollController.position.pixels ==
           _scrollController.position.maxScrollExtent) {
-        print('aki');
-        fetchListData(homeProvider);
+        fetchListData();
       }
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    final homeProvider = Provider.of<HomeProvider>(context);
-
+    final places = Provider.of<SitesProvider>(context).places;
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Color(0xff2E6347),
         ),
-        drawer: HomeDrawer(),
+        drawer: UiDrawer(),
         body: Stack(
           children: [
-            HomeList(
-                getFirstPage: homeProvider.getListData(),
-                listLength: homeProvider.numbersList.length,
-                scrollController: _scrollController,
-                listOfNumbers: homeProvider.numbersList),
-            HomeLoading(isLoading: homeProvider.isLoading)
+            places.length == 0
+                ? Center(
+                    child: CircularProgressIndicator(color: Color(0xff2E6347)))
+                : HomeList(
+                    getFirstPage: getListData,
+                    listLength: places.length,
+                    scrollController: _scrollController,
+                    listOfNumbers: _numbersList,
+                    listOfPlaces: places,
+                  ),
           ],
         ));
   }
 
-  Future fetchListData(HomeProvider homeProvider) async {
+  Future fetchListData() async {
+    _isLoading = true;
+    setState(() {});
+
     final duration = new Duration(seconds: 2);
-    return new Timer(duration, () => httpResponse(homeProvider));
+    return new Timer(duration, respuestaHTTP);
   }
 
-  void httpResponse(HomeProvider homeProvider) {
-    homeProvider.isLoading = false;
+  void _addItems() {
+    for (int i = 1; i < 10; i++) {
+      setState(() {
+        _lastItem++;
+        _numbersList.add(_lastItem);
+      });
+    }
+  }
+
+  void respuestaHTTP() {
+    _isLoading = false;
     _scrollController.animateTo(_scrollController.position.pixels + 100,
         curve: Curves.fastOutSlowIn, duration: Duration(milliseconds: 250));
-    homeProvider.addItems();
+    _addItems();
+  }
+
+  Future getListData() async {
+    final duration = new Duration(seconds: 2);
+    new Timer(duration, () {
+      _numbersList.clear();
+      _lastItem++;
+      _addItems();
+    });
+
+    return Future.delayed(duration);
   }
 }

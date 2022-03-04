@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:udea_biosecurity_app/providers/home_provider.dart';
 import 'package:udea_biosecurity_app/providers/login_form_provider.dart';
+import 'package:udea_biosecurity_app/providers/sites_provider.dart';
 import 'package:udea_biosecurity_app/screens/screens.dart';
 
 void main() => runApp(AppState());
@@ -14,7 +14,7 @@ class AppState extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => LoginFormProvider()),
-        ChangeNotifierProvider(create: (_) => HomeProvider())
+        ChangeNotifierProvider(create: (_) => SitesProvider()),
       ],
       child: MyApp(),
     );
@@ -28,7 +28,11 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'Udea Biosecurity App',
         initialRoute: 'login',
-        routes: {'login': (_) => LoginScreen(), 'home': (_) => HomeScreen()},
+        routes: {
+          'login': (_) => LoginScreen(),
+          'home': (_) => HomeScreen(),
+          'place-details': (_) => DetailsScreen()
+        },
         theme: ThemeData.light()
             .copyWith(scaffoldBackgroundColor: Colors.grey[300]));
   }
