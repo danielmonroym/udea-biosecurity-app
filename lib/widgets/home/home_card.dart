@@ -3,10 +3,9 @@ import 'package:udea_biosecurity_app/models/Places.dart';
 
 class HomeCard extends StatelessWidget {
   final Places place;
-  final int imagen;
+
   const HomeCard({
     Key? key,
-    required this.imagen,
     required this.place,
   }) : super(key: key);
 
@@ -18,15 +17,21 @@ class HomeCard extends StatelessWidget {
       child: Column(
         children: [
           ClipRRect(
+            key: Key("img-container"),
             borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(25.0),
                 topRight: Radius.circular(25.0)),
             child: FadeInImage(
-                image: NetworkImage('https://picsum.photos/id/$imagen/800/600'),
+                height: 225,
+                width: 375,
+                fit: BoxFit.fill,
+                key: Key("img"),
+                image: NetworkImage(place.imgUrl),
                 placeholder: AssetImage('lib/assets/loading_gif.gif')),
           ),
           SizedBox(height: 30),
           ListTile(
+              key: Key("text-list"),
               leading: Icon(
                 Icons.add_business_sharp,
                 color: Color(0xff2E6347),

@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 
 class HomeProvider extends ChangeNotifier {
@@ -39,16 +37,5 @@ class HomeProvider extends ChangeNotifier {
       _lastItem++;
       _numbersList.add(_lastItem);
     }
-  }
-
-  getListData() async {
-    final duration = new Duration(seconds: 2);
-    new Timer(duration, () {
-      _numbersList.clear();
-      _lastItem++;
-      addItems();
-    });
-    Future.delayed(duration);
-    notifyListeners();
   }
 }

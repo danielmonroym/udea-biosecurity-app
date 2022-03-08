@@ -1,16 +1,16 @@
 import 'dart:convert';
 
 class Places {
-  Places({
-    required this.idPlace,
-    required this.namePlace,
-    required this.phone,
-    required this.address,
-    required this.capacity,
-    required this.actualCapacity,
-    required this.checkIn,
-    required this.checkOut,
-  });
+  Places(
+      {required this.idPlace,
+      required this.namePlace,
+      required this.phone,
+      required this.address,
+      required this.capacity,
+      required this.actualCapacity,
+      required this.checkIn,
+      required this.checkOut,
+      required this.imgUrl});
 
   String idPlace;
   String namePlace;
@@ -20,6 +20,7 @@ class Places {
   int actualCapacity;
   String checkIn;
   String checkOut;
+  String imgUrl;
 
   factory Places.fromJson(String str) => Places.fromMap(json.decode(str));
 
@@ -34,6 +35,7 @@ class Places {
         actualCapacity: json["actualCapacity"],
         checkIn: json["checkIn"],
         checkOut: json["checkOut"],
+        imgUrl: json["imgUrl"],
       );
 
   Map<String, dynamic> toMap() => {
@@ -45,5 +47,6 @@ class Places {
         "actualCapacity": actualCapacity,
         "checkIn": checkIn,
         "checkOut": checkOut,
+        "imgUrl": imgUrl
       };
 }
