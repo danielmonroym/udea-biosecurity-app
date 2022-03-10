@@ -1,59 +1,49 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:udea_biosecurity_app/models/Places.dart';
+import 'package:udea_biosecurity_app/providers/site_detail_provider.dart';
+import 'package:udea_biosecurity_app/widgets/details/details_widgets.dart';
+
 import 'package:udea_biosecurity_app/widgets/ui/ui_widgets.dart';
 
-class DetailsScreen extends StatelessWidget {
-  const DetailsScreen({Key? key}) : super(key: key);
+class DetailsScreen extends StatefulWidget {
+  final String placeId;
+
+  const DetailsScreen({Key? key, required this.placeId}) : super(key: key);
+
+  @override
+  _DetailsScreenState createState() => _DetailsScreenState();
+}
+
+class _DetailsScreenState extends State<DetailsScreen> {
+  @override
+  void initState() {
+    super.initState();
+    final siteDetailprovider =
+        Provider.of<SiteDetailProvider>(context, listen: false);
+    siteDetailprovider.getPlaceById(widget.placeId);
+  }
 
   @override
   Widget build(BuildContext context) {
-    final ButtonStyle style =
-        ElevatedButton.styleFrom(textStyle: const TextStyle(fontSize: 15));
+    final loadingPlace = Provider.of<SiteDetailProvider>(context).loadingPlace;
+    final place = Provider.of<SiteDetailProvider>(context).obtainedPlace;
+    print(place);
+
+    final ButtonStyle style = ElevatedButton.styleFrom(
+        textStyle: const TextStyle(fontSize: 15), primary: Color(0xff2E6347));
 
     return Scaffold(
         appBar: AppBar(backgroundColor: Color(0xff2E6347)),
         drawer: UiDrawer(),
         body: Container(
-          height: 500,
+          height: 650,
           child: Padding(
             padding: const EdgeInsets.all(10.0),
-            child: Card(
-              shadowColor: Color(0xff2E6347),
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(25.0)),
-              child: Column(
-                children: [
-                  ClipRRect(
-                    borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(25.0),
-                        topRight: Radius.circular(25.0)),
-                    child: FadeInImage(
-                        image:
-                            NetworkImage('https://picsum.photos/id/1/800/600'),
-                        placeholder: AssetImage('lib/assets/loading_gif.gif')),
-                  ),
-                  SizedBox(height: 30),
-                  ListTile(
-                      leading: Icon(Icons.photo_album, color: Colors.blue),
-                      title: Text('titulo'),
-                      subtitle: Text(
-                          'soy del verde soy feliz, sdvsf, solo verde pa soy del verde soy feliz, sdvsf, solo verde pa')),
-                  SizedBox(height: 30),
-                  Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                    ElevatedButton(
-                      style: style,
-                      onPressed: null,
-                      child: const Text('Disabled'),
-                    ),
-                    const SizedBox(height: 30, width: 10),
-                    ElevatedButton(
-                      style: style,
-                      onPressed: () {},
-                      child: const Text('Enabled'),
-                    ),
-                  ])
-                ],
-              ),
-            ),
+            child: !loadingPlace
+                ? DetailsCard(place: place!, style: style)
+                : Center(
+                    child: CircularProgressIndicator(color: Color(0xff2E6347))),
           ),
         ));
   }

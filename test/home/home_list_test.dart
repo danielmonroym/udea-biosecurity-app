@@ -6,7 +6,7 @@ import 'package:udea_biosecurity_app/models/models.dart';
 
 import 'package:udea_biosecurity_app/widgets/home/home_widgets.dart';
 
-import 'mocks/places_mock.dart';
+import '../mocks/places_mock.dart';
 
 void main() {
   final MockPlaces mockedPlaces = MockPlaces();

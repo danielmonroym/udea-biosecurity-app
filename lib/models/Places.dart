@@ -22,7 +22,17 @@ class Places {
   String checkOut;
   String imgUrl;
 
-  factory Places.fromJson(String str) => Places.fromMap(json.decode(str));
+  factory Places.fromJson(Map<String, dynamic> json) => Places(
+        idPlace: json["idPlace"],
+        namePlace: json["namePlace"],
+        phone: json["phone"],
+        address: json["address"],
+        checkIn: json["checkIn"],
+        checkOut: json["checkOut"],
+        capacity: json["capacity"],
+        actualCapacity: json["actualCapacity"],
+        imgUrl: json["imgUrl"],
+      );
 
   String toJson() => json.encode(toMap());
 

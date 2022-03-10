@@ -8,7 +8,7 @@ class SitesProvider extends ChangeNotifier {
   String _baseUrl = "udea-biosegura.herokuapp.com";
 
   List<Places> places = [];
-  List<Places> placesitos = [];
+  List<Places> placesList = [];
   SitesProvider() {
     print('constructor');
     this.getAllPlaces();
@@ -25,17 +25,17 @@ class SitesProvider extends ChangeNotifier {
 
   getAllPlaces() async {
     final jsonData = await _getJsonData('/api/places');
-    final prueba = jsonDecode(jsonData);
+    final decodedData = jsonDecode(jsonData);
 
-    for (Map<String, dynamic> i in prueba) {
-      placesitos.add(Places.fromMap(i));
+    for (Map<String, dynamic> i in decodedData) {
+      placesList.add(Places.fromMap(i));
     }
 
-    for (Places i in placesitos) {
+    for (Places i in placesList) {
       print(i.namePlace);
     }
-    print(placesitos);
-    places = [...places, ...placesitos];
+    print(placesList);
+    places = [...places, ...placesList];
     notifyListeners();
   }
 }
