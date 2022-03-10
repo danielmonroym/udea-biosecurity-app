@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:network_image_mock/network_image_mock.dart';
+import 'package:udea_biosecurity_app/widgets/details/details_widgets.dart';
 
 import 'package:udea_biosecurity_app/widgets/home/home_widgets.dart';
 
@@ -9,28 +10,26 @@ import '../mocks/places_mock.dart';
 
 void main() {
   final MockPlaces mockedPlaces = MockPlaces();
+  final ButtonStyle style = ElevatedButton.styleFrom(
+      textStyle: const TextStyle(fontSize: 15), primary: Color(0xff2E6347));
 
-  testWidgets('home card imgs test', (WidgetTester tester) async {
+  testWidgets('details card img test', (WidgetTester tester) async {
     // Build our app and trigger a frame.
     await mockNetworkImagesFor(() => tester.pumpWidget(MaterialApp(
-          home: HomeCard(
+          home: DetailsCard(
             place: mockedPlaces,
+            style: style,
           ),
         )));
 
-    expect(find.byKey(Key("img-container")), findsOneWidget);
-    expect(find.byKey(Key("img")), findsOneWidget);
+    expect(find.byKey(Key("details-img")), findsOneWidget);
   });
 
   testWidgets('home car text list test', (WidgetTester tester) async {
     await mockNetworkImagesFor(() => tester.pumpWidget(MaterialApp(
-          home: HomeCard(
-            place: mockedPlaces,
-          ),
+          home: DetailsCard(place: mockedPlaces, style: style),
         )));
-    expect(find.byKey(Key("text-list")), findsOneWidget);
-    expect(find.textContaining('Ubicación'), findsOneWidget);
-    expect(find.textContaining('Telefono'), findsOneWidget);
-    expect(find.textContaining('Horario disponible'), findsOneWidget);
+    expect(find.byKey(Key("back-button")), findsOneWidget);
+    expect(find.byKey(Key("book-button")), findsOneWidget);
   });
 }

@@ -11,6 +11,8 @@ class HomeCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final ButtonStyle style = ElevatedButton.styleFrom(
+        textStyle: const TextStyle(fontSize: 15), primary: Color(0xff2E6347));
     return Card(
       shadowColor: Color(0xff2E6347),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25.0)),
@@ -52,14 +54,18 @@ class HomeCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                 ),
               )),
-          Row(mainAxisAlignment: MainAxisAlignment.end, children: [
-            TextButton(onPressed: null, child: Text('Cancelar')),
-            TextButton(
-                onPressed: () {
-                  Navigator.pushNamed(context, 'place-details');
-                },
-                child: Text('OK')),
-          ])
+          Padding(
+            padding: const EdgeInsets.all(9.0),
+            child: Row(mainAxisAlignment: MainAxisAlignment.end, children: [
+              ElevatedButton(
+                  style: style,
+                  onPressed: () {
+                    Navigator.pushNamed(context, 'place-details',
+                        arguments: place.idPlace);
+                  },
+                  child: Text('Reservar')),
+            ]),
+          )
         ],
       ),
     );
