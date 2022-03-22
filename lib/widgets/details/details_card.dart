@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:udea_biosecurity_app/models/models.dart';
 import 'package:udea_biosecurity_app/widgets/details/details_list.dart';
+import 'package:udea_biosecurity_app/widgets/details/details_widgets.dart';
 
 class DetailsCard extends StatelessWidget {
   const DetailsCard({
@@ -47,12 +48,24 @@ class DetailsCard extends StatelessWidget {
             ElevatedButton(
               key: Key("book-button"),
               style: style,
-              onPressed: () {},
+              onPressed: () => _showAlert(context, place),
               child: const Text('Reservar'),
             ),
           ])
         ],
       ),
+    );
+  }
+
+  _showAlert(context, Places place) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return BookAlert(
+          place: place,
+        );
+      },
+      barrierDismissible: true,
     );
   }
 }

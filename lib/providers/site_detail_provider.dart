@@ -14,7 +14,6 @@ class SiteDetailProvider extends ChangeNotifier {
   SiteDetailProvider(this._authService);
 
   Future<String> _getJsonDataForPlace(String endpoint, String token) async {
-    loadingPlace = true;
     var url = Uri.https(_baseUrl, endpoint);
 
     // Await the http get response, then decode the json-formatted response.
@@ -26,13 +25,14 @@ class SiteDetailProvider extends ChangeNotifier {
   }
 
   getPlaceById(id) async {
+    loadingPlace = true;
     final token = await _authService.readToken();
     final jsonData = await _getJsonDataForPlace('/api/places/$id', token);
     final decodedjsonData = jsonDecode(jsonData);
 
     Places place = Places.fromJson(decodedjsonData);
-    loadingPlace = false;
     obtainedPlace = place;
+    loadingPlace = false;
     notifyListeners();
   }
 }

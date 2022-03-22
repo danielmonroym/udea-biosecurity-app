@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:udea_biosecurity_app/providers/booking_form_provider.dart';
+import 'package:udea_biosecurity_app/providers/invitations_provider.dart';
 import 'package:udea_biosecurity_app/providers/login_form_provider.dart';
 import 'package:udea_biosecurity_app/providers/register_form_provider.dart';
 import 'package:udea_biosecurity_app/providers/site_detail_provider.dart';
@@ -18,6 +20,9 @@ class AppState extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(create: (_) => LoginFormProvider()),
         ChangeNotifierProvider(create: (_) => RegisterFormProvider()),
+        ChangeNotifierProvider(create: (_) => BookingFormProvider()),
+        ChangeNotifierProvider(
+            create: (_) => InvitationProvider(AuthService())),
         ChangeNotifierProvider(create: (_) => AuthService()),
         ChangeNotifierProvider(create: (_) => SitesProvider(AuthService())),
         ChangeNotifierProvider(
@@ -41,7 +46,7 @@ class MyApp extends StatelessWidget {
           'home': (_) => HomeScreen(),
           'place-details': (context) => DetailsScreen(
                 // TODO: arreglar esta wea
-                placeId: ModalRoute.of(context)?.settings.arguments as String,
+                placeId: ModalRoute.of(context)!.settings.arguments as String,
               ),
           'register': (_) => RegisterScreen(),
         },

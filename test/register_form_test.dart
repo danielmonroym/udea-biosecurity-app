@@ -18,7 +18,7 @@ import 'package:udea_biosecurity_app/screens/screens.dart';
 import 'package:udea_biosecurity_app/services/services.dart';
 
 void main() {
-  testWidgets('login form test', (WidgetTester tester) async {
+  testWidgets('register form test', (WidgetTester tester) async {
     // Build our app and trigger a frame.
     await tester.pumpWidget(MultiProvider(
       providers: [
@@ -33,14 +33,31 @@ void main() {
             create: (_) => SiteDetailProvider(AuthService())),
         ChangeNotifierProvider(create: (_) => UserService(AuthService())),
       ],
-      child: MaterialApp(home: LoginScreen()),
+      child: MaterialApp(home: RegisterScreen()),
     ));
 
-    expect(find.textContaining('Login'), findsOneWidget);
-    expect(find.textContaining('Crear una nueva cuenta'), findsOneWidget);
+    expect(find.textContaining('Crear cuenta'), findsOneWidget);
+    expect(find.textContaining('Nombre'), findsWidgets);
+    expect(find.textContaining('Dirección'), findsWidgets);
+  });
 
-    await tester.enterText(find.byKey(Key("email-form")), "correo@gmail.com");
+  testWidgets('register form test', (WidgetTester tester) async {
+    // Build our app and trigger a frame.
+    await tester.pumpWidget(MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => LoginFormProvider()),
+        ChangeNotifierProvider(create: (_) => RegisterFormProvider()),
+        ChangeNotifierProvider(create: (_) => AuthService()),
+        ChangeNotifierProvider(create: (_) => SitesProvider(AuthService())),
+        ChangeNotifierProvider(
+            create: (_) => SiteDetailProvider(AuthService())),
+        ChangeNotifierProvider(create: (_) => UserService(AuthService())),
+      ],
+      child: MaterialApp(home: RegisterScreen()),
+    ));
 
-    expect(find.text('correo@gmail.com'), findsOneWidget);
+    expect(find.textContaining('Teléfono'), findsWidgets);
+    expect(find.textContaining('Correo'), findsWidgets);
+    expect(find.textContaining('Contraseña'), findsWidgets);
   });
 }

@@ -81,11 +81,12 @@ class LoginForm extends StatelessWidget {
                           if (errorMessage == null) {
                             await userService.getUserFromLogin();
                             if (userService.succesfulData) {
+                              loginForm.isLoading = false;
                               Navigator.pushReplacementNamed(context, 'home');
                             } else {
+                              loginForm.isLoading = false;
                               NotificationsService.showSnackbar(
                                   userService.responseUser);
-                              loginForm.isLoading = false;
                             }
                           } else {
                             NotificationsService.showSnackbar(errorMessage);
