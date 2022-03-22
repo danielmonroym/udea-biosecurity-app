@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -9,22 +10,26 @@ class SitesProvider extends ChangeNotifier {
 
   List<Places> places = [];
   List<Places> placesList = [];
-  SitesProvider() {
+  final _authService;
+  SitesProvider(this._authService) {
     print('constructor');
     this.getAllPlaces();
   }
 
-  Future<String> _getJsonData(String endpoint) async {
+  Future<String> _getJsonData(String endpoint, String token) async {
     var url = Uri.https(_baseUrl, endpoint);
 
     // Await the http get response, then decode the json-formatted response.
-    final response = await http.get(url);
+    final response = await http.get(url, headers: {
+      HttpHeaders.authorizationHeader: 'Bearer $token',
+    });
     print(response.body);
     return response.body;
   }
 
   getAllPlaces() async {
-    final jsonData = await _getJsonData('/api/places');
+    final token = await _authService.readToken();
+    final jsonData = await _getJsonData('/api/places', token);
     final decodedData = jsonDecode(jsonData);
 
     for (Map<String, dynamic> i in decodedData) {

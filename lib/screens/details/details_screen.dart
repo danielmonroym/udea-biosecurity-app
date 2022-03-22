@@ -40,8 +40,8 @@ class _DetailsScreenState extends State<DetailsScreen> {
           height: 650,
           child: Padding(
             padding: const EdgeInsets.all(10.0),
-            child: !loadingPlace
-                ? DetailsCard(place: place!, style: style)
+            child: !loadingPlace && place != null
+                ? DetailsCard(place: place, style: style)
                 : Center(
                     child: CircularProgressIndicator(color: Color(0xff2E6347))),
           ),
