@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:udea_biosecurity_app/providers/login_form_provider.dart';
+import 'package:udea_biosecurity_app/services/services.dart';
 import 'package:udea_biosecurity_app/ui/input_decorations.dart';
 
 class LoginForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final loginForm = Provider.of<LoginFormProvider>(context);
+    final userService = Provider.of<UserService>(context);
     return Container(
       child: Form(
           key: loginForm.formKey,
@@ -40,7 +42,7 @@ class LoginForm extends StatelessWidget {
                 keyboardType: TextInputType.emailAddress,
                 onChanged: (value) => loginForm.password = value,
                 decoration: InputDecorations.authInputDecoration(
-                    hintText: '****',
+                    hintText: '******',
                     labelText: 'Password',
                     prefixIcon: Icons.lock_outline),
                 validator: (value) {
@@ -69,12 +71,26 @@ class LoginForm extends StatelessWidget {
                       ? null
                       : () async {
                           FocusScope.of(context).unfocus();
+                          final authService =
+                              Provider.of<AuthService>(context, listen: false);
                           if (!loginForm.isValidForm()) return;
                           loginForm.isLoading = true;
+                          final String? errorMessage = await authService.login(
+                              loginForm.email, loginForm.password);
 
-                          await Future.delayed(Duration(seconds: 2));
-                          loginForm.isLoading = false;
-                          Navigator.pushReplacementNamed(context, 'home');
+                          if (errorMessage == null) {
+                            await userService.getUserFromLogin();
+                            if (userService.succesfulData) {
+                              Navigator.pushReplacementNamed(context, 'home');
+                            } else {
+                              NotificationsService.showSnackbar(
+                                  userService.responseUser);
+                              loginForm.isLoading = false;
+                            }
+                          } else {
+                            NotificationsService.showSnackbar(errorMessage);
+                            loginForm.isLoading = false;
+                          }
                         })
             ],
           )),

@@ -11,14 +11,16 @@ import 'package:provider/provider.dart';
 import 'package:udea_biosecurity_app/providers/login_form_provider.dart';
 import 'package:udea_biosecurity_app/providers/sites_provider.dart';
 import 'package:udea_biosecurity_app/screens/screens.dart';
+import 'package:udea_biosecurity_app/services/services.dart';
 
 void main() {
   testWidgets('login form test', (WidgetTester tester) async {
     // Build our app and trigger a frame.
     await tester.pumpWidget(MultiProvider(
       providers: [
+        ChangeNotifierProvider(create: (_) => AuthService()),
         ChangeNotifierProvider(create: (_) => LoginFormProvider()),
-        ChangeNotifierProvider(create: (_) => SitesProvider()),
+        ChangeNotifierProvider(create: (_) => SitesProvider(AuthService())),
       ],
       child: MaterialApp(home: LoginScreen()),
     ));
