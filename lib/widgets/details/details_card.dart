@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:udea_biosecurity_app/models/models.dart';
 import 'package:udea_biosecurity_app/widgets/details/details_list.dart';
-import 'package:udea_biosecurity_app/widgets/details/details_widgets.dart';
 
 class DetailsCard extends StatelessWidget {
   const DetailsCard({
@@ -66,6 +65,41 @@ class DetailsCard extends StatelessWidget {
         );
       },
       barrierDismissible: true,
+    );
+  }
+}
+
+class BookAlert extends StatelessWidget {
+  const BookAlert({
+    Key? key,
+    required this.place,
+  }) : super(key: key);
+
+  final Places place;
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
+      title: Text(place.namePlace),
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text('Este es el contenido de la caja de la Alerta'),
+          FlutterLogo(
+            size: 100.0,
+          )
+        ],
+      ),
+      actions: [
+        TextButton(
+          child: Text('Cancelar'),
+          onPressed: () => Navigator.of(context).pop(),
+        ),
+        TextButton(
+          child: Text('OK'),
+          onPressed: () => Navigator.of(context).pop(),
+        )
+      ],
     );
   }
 }
