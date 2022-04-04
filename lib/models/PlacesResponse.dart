@@ -22,7 +22,4 @@ class PlacesResponse {
   Map<String, dynamic> toMap() => {
         "results": results,
       };
-
-  static pruebita(String jsonData) =>
-      (json.decode(jsonData) as List).map((i) => Places.fromJson(i));
 }
