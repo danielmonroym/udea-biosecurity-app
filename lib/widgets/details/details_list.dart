@@ -19,40 +19,42 @@ class DetailsList extends StatelessWidget {
           child: Container(
             child: Padding(
               padding: const EdgeInsets.all(15.0),
-              child: Column(
-                children: [
-                  Row(
-                    children: [
-                      Text(
-                        "Ubicación: ",
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                      Text(place.address),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      Text("Capacidad total: ",
-                          style: TextStyle(fontWeight: FontWeight.bold)),
-                      Text(place.capacity.toString()),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      Text("Capacidad actual: ",
-                          style: TextStyle(fontWeight: FontWeight.bold)),
-                      Text(place.actualCapacity.toString()),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      Text("Horario disponible: ",
-                          style: TextStyle(fontWeight: FontWeight.bold)),
-                      Text("${place.checkIn} - ${place.checkOut}")
-                    ],
-                  )
-                ],
-                mainAxisAlignment: MainAxisAlignment.start,
+              child: Container(
+                child: Column(
+                  children: [
+                    Row(
+                      children: [
+                        Text(
+                          "Ubicación: ",
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                        Text(place.address),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        Text("Capacidad total: ",
+                            style: TextStyle(fontWeight: FontWeight.bold)),
+                        Text(place.capacity.toString()),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        Text("Capacidad actual: ",
+                            style: TextStyle(fontWeight: FontWeight.bold)),
+                        Text(place.actualCapacity.toString()),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        Text("Horario disponible: ",
+                            style: TextStyle(fontWeight: FontWeight.bold)),
+                        Text("${place.checkIn} - ${place.checkOut}")
+                      ],
+                    )
+                  ],
+                  mainAxisAlignment: MainAxisAlignment.start,
+                ),
               ),
             ),
           ),

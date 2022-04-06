@@ -22,7 +22,6 @@ class UserService extends ChangeNotifier {
     var url = Uri.http(_baseUrl, endpoint);
 
     // Await the http get response, then decode the json-formatted response.
-    print(url);
     final response = await http.get(url, headers: {
       HttpHeaders.authorizationHeader: 'Bearer $token',
     });
@@ -50,8 +49,7 @@ class UserService extends ChangeNotifier {
       User user = User.fromJson(decodedjsonData);
       loadingUser = false;
       obtainedUser = user;
-      print(obtainedUser!.email);
-      print(obtainedUser!.idUser);
+
       notifyListeners();
     }
   }

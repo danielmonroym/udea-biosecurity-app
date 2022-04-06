@@ -28,7 +28,6 @@ class _DetailsScreenState extends State<DetailsScreen> {
   Widget build(BuildContext context) {
     final loadingPlace = Provider.of<SiteDetailProvider>(context).loadingPlace;
     final place = Provider.of<SiteDetailProvider>(context).obtainedPlace;
-    print(place);
 
     final ButtonStyle style = ElevatedButton.styleFrom(
         textStyle: const TextStyle(fontSize: 15), primary: Color(0xff2E6347));

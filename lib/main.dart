@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:udea_biosecurity_app/providers/booking_form_provider.dart';
-import 'package:udea_biosecurity_app/providers/invitations_provider.dart';
-import 'package:udea_biosecurity_app/providers/login_form_provider.dart';
-import 'package:udea_biosecurity_app/providers/register_form_provider.dart';
-import 'package:udea_biosecurity_app/providers/site_detail_provider.dart';
-import 'package:udea_biosecurity_app/providers/sites_provider.dart';
+import 'package:udea_biosecurity_app/models/models.dart';
+import 'package:udea_biosecurity_app/providers/providers.dart';
 import 'package:udea_biosecurity_app/screens/screens.dart';
 import 'package:udea_biosecurity_app/services/services.dart';
 
@@ -45,10 +41,13 @@ class MyApp extends StatelessWidget {
           'login': (_) => LoginScreen(),
           'home': (_) => HomeScreen(),
           'place-details': (context) => DetailsScreen(
-                // TODO: arreglar esta wea
                 placeId: ModalRoute.of(context)!.settings.arguments as String,
               ),
           'register': (_) => RegisterScreen(),
+          'confirmation': (context) => ConfirmationScreen(
+                succesfulInvitationData:
+                    ModalRoute.of(context)!.settings.arguments as Invitation,
+              )
         },
         scaffoldMessengerKey: NotificationsService.messengerKey,
         theme: ThemeData.light()

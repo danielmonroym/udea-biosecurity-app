@@ -88,9 +88,6 @@ class AuthService extends ChangeNotifier {
       'address': address
     };
 
-    // Await the http get response, then decode the json-formatted response.
-    print(url);
-    print(userData);
     final response = await http.post(url,
         headers: {
           HttpHeaders.authorizationHeader: 'Bearer $token',
@@ -115,7 +112,7 @@ class AuthService extends ChangeNotifier {
     final token = await readToken();
     final responseFromUserRegister =
         await _createUser('/api/users', token, address, phone, email, name);
-    print(responseFromUserRegister);
+
     loadingRegistration = false;
     notifyListeners();
   }
