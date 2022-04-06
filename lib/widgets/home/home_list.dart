@@ -21,7 +21,6 @@ class HomeList extends StatelessWidget {
       itemCount: this.listLength,
       itemBuilder: (BuildContext context, int index) {
         Places place = listOfPlaces[index];
-        print(listOfPlaces[index].idPlace);
         return Center(
           child: HomeCard(place: place),
         );

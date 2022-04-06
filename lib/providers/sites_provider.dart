@@ -12,7 +12,6 @@ class SitesProvider extends ChangeNotifier {
   List<Places> placesList = [];
   final _authService;
   SitesProvider(this._authService) {
-    print('constructor');
     this.getAllPlaces();
   }
 
@@ -23,7 +22,6 @@ class SitesProvider extends ChangeNotifier {
     final response = await http.get(url, headers: {
       HttpHeaders.authorizationHeader: 'Bearer $token',
     });
-    print(response.body);
     return response.body;
   }
 
@@ -35,11 +33,6 @@ class SitesProvider extends ChangeNotifier {
     for (Map<String, dynamic> i in decodedData) {
       placesList.add(Places.fromMap(i));
     }
-
-    for (Places i in placesList) {
-      print(i.namePlace);
-    }
-    print(placesList);
     places = [...places, ...placesList];
     notifyListeners();
   }

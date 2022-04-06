@@ -26,12 +26,14 @@ class _BookAlertState extends State<BookAlert> {
   String _date2 = "";
   int _hour2 = 0;
   int _minutes2 = 0;
+  GlobalKey<FormState> keyFormState =
+      GlobalKey<FormState>(debugLabel: '_bookScreenkey');
   @override
   Widget build(BuildContext context) {
-    final bookingForm = Provider.of<BookingFormProvider>(context);
+    BookingFormProvider bookingForm = Provider.of<BookingFormProvider>(context);
+    keyFormState = bookingForm.formKey;
     final invitationProvider = Provider.of<InvitationProvider>(context);
     final userService = Provider.of<UserService>(context);
-    print(bookingForm.isLoading);
     return AlertDialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
       title: Column(
@@ -52,6 +54,7 @@ class _BookAlertState extends State<BookAlert> {
               child: CircularProgressIndicator(color: Color(0xff2E6347)),
             )
           : bookAlertData(
+              keyFormState,
               bookingForm,
               context,
               invitationProvider,
@@ -61,18 +64,21 @@ class _BookAlertState extends State<BookAlert> {
         TextButton(
           child: Text('Cancelar'),
           onPressed: () => Navigator.of(context).pop(),
-        ),
-        TextButton(child: Text('OK'), onPressed: () => {})
+        )
       ],
     );
   }
 
-  Container bookAlertData(BookingFormProvider bookingForm, BuildContext context,
-      InvitationProvider invitationProvider, UserService userService) {
+  Container bookAlertData(
+      GlobalKey<FormState> keyFormState,
+      BookingFormProvider bookingForm,
+      BuildContext context,
+      InvitationProvider invitationProvider,
+      UserService userService) {
     return Container(
       width: 500,
       child: Form(
-        key: bookingForm.formKey,
+        key: keyFormState,
         autovalidateMode: AutovalidateMode.onUserInteraction,
         child: Column(
           children: [
@@ -149,35 +155,19 @@ class _BookAlertState extends State<BookAlert> {
                             _hour2,
                             _minutes2);
 
-                        bookingForm.isLoading = false;
-
-                        if (invitationProvider.createdInvitation != null &&
-                            !invitationProvider.loadingInvitation) {
-                          Navigator.pushNamed(context, 'confirmation',
-                              arguments: invitationProvider.createdInvitation);
+                        if (invitationProvider.succesfulData) {
+                          bookingForm.isLoading = false;
+                          if (invitationProvider.createdInvitation != null &&
+                              !invitationProvider.loadingInvitation) {
+                            Navigator.popAndPushNamed(context, 'confirmation',
+                                arguments:
+                                    invitationProvider.createdInvitation);
+                          }
+                        } else {
+                          bookingForm.isLoading = false;
+                          _showAlert(
+                              context, invitationProvider.responseInvitation);
                         }
-
-                        // TODO: validar si el login es correcto
-                        // // final String? errorMessage =
-                        // //     await authService.createUser(
-                        // //         bookingForm.email, bookingForm.password);
-
-                        // // if (errorMessage == null) {
-                        // //   authService.createUserInDB(
-                        // //       bookingForm.name,
-                        // //       bookingForm.email,
-                        // //       bookingForm.address,
-                        // //       bookingForm.phone);
-                        // //   if (!authService.loadingRegistration) {
-                        // //     NotificationsService.showSnackbar(
-                        // //         authService.responseFromRegistration);
-                        // //     bookingForm.isLoading = false;
-                        // //     Navigator.pushReplacementNamed(context, 'login');
-                        // //   }
-                        // } else {
-                        //   // NotificationsService.showSnackbar(errorMessage);
-                        //   bookingForm.isLoading = false;
-                        // }
                       })
           ],
         ),
@@ -215,5 +205,17 @@ class _BookAlertState extends State<BookAlert> {
         _inputFieldDateController2.text = _date2;
       });
     }
+  }
+
+  _showAlert(context, String errorResponse) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          content: Text(errorResponse),
+        );
+      },
+      barrierDismissible: true,
+    );
   }
 }

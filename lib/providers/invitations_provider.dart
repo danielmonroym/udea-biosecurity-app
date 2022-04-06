@@ -11,6 +11,8 @@ class InvitationProvider extends ChangeNotifier {
   bool loadingInvitation = false;
   Invitation? createdInvitation;
   final _authService;
+  String responseInvitation = "";
+  bool succesfulData = false;
 
   InvitationProvider(this._authService);
 
@@ -25,9 +27,6 @@ class InvitationProvider extends ChangeNotifier {
       'outDate': outDate,
     };
 
-    // Await the http get response, then decode the json-formatted response.
-    print(url);
-    print(invitationData);
     final response = await http.post(url,
         headers: {
           HttpHeaders.authorizationHeader: 'Bearer $token',
@@ -35,43 +34,43 @@ class InvitationProvider extends ChangeNotifier {
         },
         body: json.encode(invitationData));
 
-    print(response.statusCode);
-    return response.body;
+    switch (response.statusCode) {
+      case 201:
+        responseInvitation = response.body;
+        succesfulData = true;
+        notifyListeners();
+        return responseInvitation;
+
+      default:
+        responseInvitation = 'Error: ${response.body}';
+        notifyListeners();
+        return responseInvitation;
+    }
   }
 
   createInvitation(String userId, String placeId, int inHour, int inMinutes,
       int outHour, int outMinutes) async {
-    print(inHour);
-    print(inMinutes);
-    print(outHour);
-    print(outMinutes);
     loadingInvitation = true;
     notifyListeners();
-    final formatter = new DateFormat('yyyy-MM-dd hh:mm');
+    final formatter = new DateFormat('yyyy-MM-dd HH:mm');
     DateTime preuba = DateTime.now();
     DateTime inDate =
         new DateTime(preuba.year, preuba.month, preuba.day, inHour, inMinutes);
-
     DateTime outDate = new DateTime(
         preuba.year, preuba.month, preuba.day, outHour, outMinutes);
-
-    print(inDate);
-    print(outDate);
-
     String formattedInDate = formatter.format(inDate);
     String formattedOutDate = formatter.format(outDate);
-
     final token = await _authService.readToken();
-    print(token);
     final jsonData = await _createInvitation('/api/invitations', token, userId,
         placeId, formattedInDate, formattedOutDate);
+    if (succesfulData) {
+      final decodedjsonData = jsonDecode(jsonData);
 
-    final decodedjsonData = jsonDecode(jsonData);
+      Invitation invitation = Invitation.fromJson(decodedjsonData);
+      createdInvitation = invitation;
+      loadingInvitation = false;
 
-    Invitation invitation = Invitation.fromJson(decodedjsonData);
-    createdInvitation = invitation;
-    loadingInvitation = false;
-
-    notifyListeners();
+      notifyListeners();
+    }
   }
 }
