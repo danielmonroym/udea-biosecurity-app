@@ -51,6 +51,7 @@ class InvitationProvider extends ChangeNotifier {
   createInvitation(String userId, String placeId, int inHour, int inMinutes,
       int outHour, int outMinutes) async {
     loadingInvitation = true;
+    succesfulData = false;
     notifyListeners();
     final formatter = new DateFormat('yyyy-MM-dd HH:mm');
     DateTime preuba = DateTime.now();
@@ -72,5 +73,8 @@ class InvitationProvider extends ChangeNotifier {
 
       notifyListeners();
     }
+    loadingInvitation = false;
+
+    notifyListeners();
   }
 }
