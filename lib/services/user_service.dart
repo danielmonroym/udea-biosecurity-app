@@ -33,8 +33,7 @@ class UserService extends ChangeNotifier {
         return responseUser;
 
       default:
-        responseUser =
-            'Error occured while Communication with Server with StatusCode: ${response.statusCode}';
+        responseUser = 'Error: ${response.body}';
         notifyListeners();
         return responseUser;
     }
