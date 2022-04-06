@@ -100,8 +100,7 @@ class AuthService extends ChangeNotifier {
         notifyListeners();
         return responseFromRegistration;
       default:
-        responseFromRegistration =
-            'Error occured while Communication with Server with StatusCode: ${response.statusCode}';
+        responseFromRegistration = 'Error: ${response.body}';
         notifyListeners();
         return responseFromRegistration;
     }
