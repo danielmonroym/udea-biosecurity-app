@@ -20,7 +20,6 @@ class SiteDetailProvider extends ChangeNotifier {
     final response = await http.get(url, headers: {
       HttpHeaders.authorizationHeader: 'Bearer $token',
     });
-    print(response.body);
     return response.body;
   }
 
